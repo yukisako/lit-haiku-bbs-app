@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>一句詠む</title>
+    <meta name="viewport" content="width=devide-width, initial-scale=1">
+    <link rel="stylesheet" href="/stylesheets/haiku.css">
+</head>
+<body>
+<header>
+  <h1><a href="#modal-view">一句読む</a></h1>
+</header>
+<div id="modal-view">
+  <a href="#" class="close"></a>
+  <div class="form-box">
+    <h2>一句どうぞ</h2>
+    <form action="/new" method="post">
+      <h3>上の句</h3>
+      <input type="text" maxlength="5" name="haiku1" placeholder="5文字まで">
+      <input type="text" maxlength="7" name="haiku2" placeholder="7文字まで">
+      <input type="text" maxlength="5" name="haiku3" placeholder="5文字まで">
+      <h3>下の句</h3>
+      <input type="text" maxlength="7" name="haiku4" placeholder="7文字まで">
+      <input type="text" maxlength="7" name="haiku5" placeholder="7文字まで">
+      <h3>ペンネーム</h3>
+      <input type="text" name="author" placeholder="詠み人"></p>
+      <input type="submit" value="一句読む">
+    </form>
+  </div>
+</div>
+
+<main>
+  <% @contents.each do |content| %>
+  <article>
+    <span><%= content.haiku1 %></span>
+    <span><%= content.haiku2 %></span>
+    <span><%= content.haiku3 %></span>
+    <span><%= content.haiku4 %></span>
+    <span><%= content.haiku5 %></span>
+    <p>作者: <%= content.author %></p>
+    <p>いいね数: <%= num_to_k(content.good) %></p>
+    <% unless content.img.empty? %>
+    <p><img src="<%= content.img %>"></p>
+    <% end %>
+    <div class="edit">
+      <form action="/good/<%= content.id %>" method="post">
+        <input type="submit" value="いいね">
+      </form>
+      <form action="/delete/<%= content.id %>"method="post">
+        <input type="submit" value="削除">
+      </form>
+      <form action="/edit/<%= content.id %>" method="post">
+        <input type="submit" value="編集">
+      </form>
+    </div>
+  </article>
+  <% end %>
+
+<main>
+
+</body>
+</html>
